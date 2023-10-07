@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+        <record id="view_dashboard" model="ir.ui.view">
+            <field name="name">Dashboard View</field>
+            <field name="model">mms.balance</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard" create="false">
+                    <div class="oe_view">
+                        <div class="oe_view_header">
+                            <div class="oe_view_title" style="text-align: center; font-weight: bold;">
+                                <h1>Dashboard</h1>
+                            </div>
+                        </div>
+                        <div class="oe_view_content">
+                            <div class="oe_view_container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card" style="background-color: #AAF0D1;">
+                                            <div class="card-header" style="font-weight: bold;">
+                                                Name
+                                            </div>
+                                            <div class="card-body">
+                                                <h2 class="card-title">
+                                                    <field name="name" readonly="1" widget="many2one_avatar_user"/>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card" style="background-color: #5EFB6E;">
+                                            <div class="card-header" style="font-weight: bold;">
+                                                Total Income
+                                            </div>
+                                            <div class="card-body">
+                                                <h1 class="card-title">
+                                                    <field name="currency_id" invisible="1"/>
+                                                    <field name="all_total_income" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card" style="background-color: #FED8B1;">
+                                            <div class="card-header" style="font-weight: bold;">
+                                                Total Expense
+                                            </div>
+                                            <div class="card-body">
+                                                <h1 class="card-title">
+                                                    <field name="all_total_expense" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card" style="background-color: #FFE87C;">
+                                            <div class="card-header" style="font-weight: bold;">
+                                                Available Balance
+                                            </div>
+                                            <div class="card-body">
+                                                <h1 class="card-title">
+                                                    <field name="available_balance" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                     <h1></h1>
+                    </div>
+                    <div>
+                        <p>
+                          
+                          <h></h>
+                        
+                        </p>
+                    </div>
+                    <div>
+                      <h1></h1>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                       <button type="object" name="refresh" class="btn btn-primary o_form_button_save" title="Refresh" accesskey="s" id="refresh_button">Refresh</button>
+                    </div>
+                    <div style="text-align: center;">
+                        <p>
+                            <h6>(Press 'Refresh' to refresh the values)</h6>
+                        </p>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_dashboard_view" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">mms.balance</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+            
+        <menuitem id="menu_mms_dashboard" name="Dashboard" parent="mms_menu_root" action="action_dashboard_view" sequence="1"/>
+    </data>
+
+</odoo>
+

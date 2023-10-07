@@ -1,0 +1,103 @@
+<odoo>
+    <data>
+        
+        <record id="expense_search" model="ir.ui.view">
+            <field name="name">expense.search</field>
+            <field name="model">mms.expense</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Archived" name="archived" domain="[('active', '=', False)]" />
+                </search>
+            </field>
+        </record>
+
+        <record id="mms_expense_tree" model="ir.ui.view">
+            <field name="name">mms.expense.tree</field>
+            <field name="model">mms.expense</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="expense_date"/>
+                    <field name = "expense_category_line" widget="many2many_tags"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="total_amount" string="Expense " readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" sum = "Total Expense"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mms_expense_calendar" model="ir.ui.view">
+            <field name="name">mms.expense.calendar</field>
+            <field name="model">mms.expense</field>
+            <field name="arch" type="xml">
+                <calendar string="Expense Calendar" date_start="expense_date" date_stop="expense_date" mode="month" event_open_popup="True" quick_add="False">
+                    <field name="name"/>
+                    <field name="expense_date"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="total_amount" string="Total Expense" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="mms_expense_form" model="ir.ui.view">
+            <field name="name">mms.expense.form</field>
+            <field name="model">mms.expense</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}" />
+                        <div class="oe_button_box custom_button_box" name="button_box">
+                            <button type="object" name="toggle_active" class="oe_stat_button"
+                                icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                    options="{'terminology': 'archive'}" invisible="1" />
+                                <span name="active" class="o_stat_text text-danger"
+                                    attrs="{'invisible': [('active', '=', False)]}">Deactive</span>
+                                <span name="active" class="o_stat_text text-success"
+                                    attrs="{'invisible': [('active', '=', True)]}">Active</span>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="expense_date" string="Enter Date" />
+                            <h2>
+                                <field name="expense_date" placeholder = "   --  /  --  /  -- " />
+                            </h2>
+                        </div>
+                        <group>
+                            <field name="name" readonly = "1" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="total_amount" string="Total Expense (Day) " readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name ="all_total_expense" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <notebook>
+                            <page name="expense" string="Expense List">
+                                <field name="expense_category_line" mode="tree" widget="one2many_list">
+                                    <tree editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="expense_id" invisible="1"/> 
+                                    </tree>
+                                </field>
+                            </page>
+                             
+                            <page name="note" string="Note">
+                                <field name="note" widget="text" placeholder="Enter your notes" style="height: 200px;" multiline="True"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mms_expense_action" model="ir.actions.act_window">
+            <field name="name">Expense</field>
+            <field name="res_model">mms.expense</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+        <menuitem name="Expense" id="expense_menu" parent="money_management_system.mms_menu_root" action="mms_expense_action" sequence="3"/>
+
+    </data>
+</odoo>

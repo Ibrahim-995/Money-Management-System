@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+
+      <menuitem name="Money Management System" id="mms_menu_root" web_icon="money_management_system,static/description/icon.png" />
+
+
+        <menuitem name="All Category" id="category_menu" parent="money_management_system.mms_menu_root" sequence="4"/>
+        <menuitem name="Income Category" id="income_category_sub_menu" action="income_category_action" parent="money_management_system.category_menu"/>
+        <menuitem name="Expense Category" id="expense_category_sub_menu" action="expense_category_action" parent="money_management_system.category_menu"/>
+
+  </data>
+
+</odoo>
